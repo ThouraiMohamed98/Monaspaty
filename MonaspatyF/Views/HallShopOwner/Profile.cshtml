@@ -1,0 +1,86 @@
+﻿@{
+    ViewData["Title"] = "Profile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="modal fade" id="details">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">X</button>
+            </div>
+            <div class="modal-body" id="Details_Body">
+                <partial src="AddHS"></partial>
+            </div>
+            <div class="modal-footer">
+                <input type="button" class="btn btn-danger" data-dismiss="modal" value="close" />
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Name{
+    <span>@ViewBag.HallShopOwner.name</span>
+}
+
+<div class="row p-5">
+    @foreach (var item in ViewBag.HallShop)
+    {
+        <div class="card m-2" style="width: 18rem;">
+            <img class="card-img-top" src="~/attach/@item.Image" alt="Card image cap" style="height:200px">
+            <div class="card-body">
+                <h5 class="card-title">@item.Name</h5>
+                <h6 class="card-subtitle mb-2 text-muted">@item.Station ,@item.City ,@item.Street.</h6>
+                <p class="card-text">@item.description.</p>
+                <a onclick="EditHOS(@item.Id)" class="btn btn-primary">Edit</a>
+                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger" onclick="return confirm('are you sure you want to Delete Item?')">Delete</a>
+            </div>
+        </div>
+    }
+
+    <div class="card text-center  bg-light" style="width: 18rem;height:200px;margin:10px">
+        <div class="card-body">
+            <h5 class="card-title">Add New Card</h5>
+            <p class="card-text">
+                You Can Add Details of Hall OR Shop
+            </p>
+            <button type="button" class="btn btn-secondary" onclick="createHOS(@ViewBag.HallShopOwner.Id)">Add</button>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        function createHOS(id) {
+            $.ajax({
+                type: "Get",
+                url: "/HallShopOwner/AddHS",
+                data: { ownerid: id },
+                success: function (response) {
+                    $("#details #Details_Body").html(response);
+                    $(".modal-header").html("Create User");
+                    $("#details").modal("show");
+                },
+                error: function () {
+                    console.log("Error");
+                }
+            })
+        }
+
+        function EditHOS(id) {
+            $.ajax({
+                type: "Get",
+                url: "/HallShopOwner/EditHOS",
+                data: { HOSid: id },
+                success: function (response) {
+                    $("#details #Details_Body").html(response);
+                    $(".modal-header").html("Create User");
+                    $("#details").modal("show");
+                },
+                error: function () {
+                    console.log("Error");
+                }
+            })
+        }
+    </script>
+}

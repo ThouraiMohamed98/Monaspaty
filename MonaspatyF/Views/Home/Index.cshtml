@@ -1,0 +1,133 @@
+﻿@{
+    ViewData["Title"] = "Home";
+    Layout = "~/Views/Shared/_layout1.cshtml";
+}
+
+<div class="w3l_banner_nav_right">
+    <section class="slider">
+        <div class="flexslider">
+            <ul class="slides">
+                <li>
+                    <div class="w3l_banner_nav_right_banner">
+                        <!--<h3>   <span>Lamsa Akhira</span>samoulte  </h3>-->
+                        @*<div class="more">
+                            <a href="hall.html" class="button--saqui button--round-l button--text-thick" data-text="Shop now">Show Now</a>
+                        </div>*@
+                    </div>
+                </li>
+                <li>
+                    <div class="w3l_banner_nav_right_banner1">
+                        <!--<h3>   <span>Ferika</span>Al Minia  </h3>-->
+                        @*<div class="more">
+                            <a href="hall.html" class="button--saqui button--round-l button--text-thick" data-text="Shop now">Show Now</a>
+                        </div>*@
+                    </div>
+                </li>
+                <li>
+                    <div class="w3l_banner_nav_right_banner2">
+                        <!--<h3>Hourase</h3>
+                        <h3>upto <i>30%</i> off. </h3>-->
+                        @*<div class="more">
+                            <a href="hall.html" class="button--saqui button--round-l button--text-thick" data-text="Shop now">Show Now</a>
+                        </div>*@
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </section>
+    <!-- flexSlider -->
+    <link rel="stylesheet" href="~/Content/css/flexslider.css" type="text/css" media="screen" property="" />
+    <script defer src="~/Content/js/jquery.flexslider.js"></script>
+    <script type="text/javascript">
+        $(window).load(function () {
+            $('.flexslider').flexslider({
+                animation: "slide",
+                start: function (slider) {
+                    $('body').removeClass('loading');
+                }
+            });
+        });
+    </script>
+    <!-- //flexSlider -->
+</div>
+<div class="clearfix"></div>
+	
+<!-- top-brands -->
+<div class="top-brands" id="Advertisement">
+    <div class="container">
+        <h3>Advertisement</h3>
+        <div class="agile_top_brands_grids">
+            <div class="col-md-3 top_brand_left">
+                <div class="hover14 column">
+                    <div class="agile_top_brand_left_grid">
+                        <div class="agile_top_brand_left_grid1">
+                            <figure>
+                                <div class="snipcart-item block">
+                                    <div class="snipcart-thumb">
+                                        <a asp-controller="HallShops" asp-action="Index"><img title="a Hall" alt="a Hall" class="img-responsive" src="~/Content/images/img.jpg" /></a> <br />
+                                        <h4 style="font-family: Verdana, sans-serif"> The Halls </h4>
+                                        <p style="font-family: Georgia, serif"> For parties </p>
+                                    </div>
+                                    <div class="snipcart-details top_brand_home_details">
+                                        <a asp-controller="HallShops" asp-action="Index" class="btn btn-info">Show Profile</a>
+                                    </div>
+                                </div>
+                            </figure>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+            <div class="col-md-3 top_brand_left">
+                <div class="hover14 column">
+                    <div class="agile_top_brand_left_grid">
+                        <div class="agile_top_brand_left_grid1">
+                            <figure>
+                                <div class="snipcart-item block">
+                                    <div class="snipcart-thumb">
+                                        <a asp-controller="HallShops" asp-action="IndexShop"><img src="~/Content/images/cat-post-1.jpg" alt=" The Shops" class="img-responsive" style="height: 215px;" /></a> <br />
+                                        <h4 style="font-family: Verdana, sans-serif">The Shops</h4>
+                                        <p style="font-family: Georgia, serif"> For Party Requirements </p>
+                                    </div>
+                                    <div class="snipcart-details top_brand_home_details">
+                                        <a asp-controller="HallShops" asp-action="IndexShop" class="btn btn-info">Show Profile</a>
+                                    </div>
+                                </div>
+                            </figure>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @*<div class="col-md-3 top_brand_left">
+            <div class="hover14 column">
+                <div class="agile_top_brand_left_grid">
+                    <div class="agile_top_brand_left_grid_pos">
+                        <img src="~/Content/images/offer.png" alt=" " class="img-responsive" />
+                    </div>
+                    <div class="agile_top_brand_left_grid1">
+                        <figure>
+                            <div class="snipcart-item block">
+                                <div class="snipcart-thumb">
+                                    <a href="#"><img src="~/Content/images/cat-post-1.jpg" alt=" " class="img-responsive" style="height: 280px;" /></a>
+                                    <h4>Frika restaurant</h4>
+                                    <h4>Al Minia</h4>
+                                </div>
+                                <div class="snipcart-details top_brand_home_details">
+                                    <form action="#" method="post">
+                                        <fieldset>
+
+                                            <input type="submit" name="submit" value="Show Profile" class="button" />
+                                        </fieldset>
+                                    </form>
+                                </div>
+                            </div>
+                        </figure>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+</div>

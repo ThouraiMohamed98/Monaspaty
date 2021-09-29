@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <_PublishTargetUrl>C:\Users\Pc\Source\Repos\MonaspatyF\MonaspatyF\bin\Release\net5.0\publish\</_PublishTargetUrl>
+    <History>True|2021-07-28T09:02:44.6960512Z;True|2021-07-28T01:14:28.6455638-07:00;True|2021-07-28T01:13:06.6417106-07:00;</History>
+  </PropertyGroup>
+</Project>

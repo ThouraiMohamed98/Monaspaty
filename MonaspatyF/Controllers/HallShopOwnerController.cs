@@ -8,6 +8,8 @@ using MonaspatyF.Models;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Http;
 using System.Net;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
 
 namespace MonaspatyF.Controllers
 {
@@ -15,10 +17,13 @@ namespace MonaspatyF.Controllers
     {
         HSORepository HSO;
         cookies cookie;
-        public HallShopOwnerController(HSORepository HSO, cookies cookie)
+        private readonly IWebHostEnvironment webHostEnvironment;
+
+        public HallShopOwnerController(HSORepository HSO, cookies cookie, IWebHostEnvironment webHostEnvironment)
         {
             this.HSO = HSO;
             this.cookie = cookie;
+            this.webHostEnvironment = webHostEnvironment;
         }
 
         public IActionResult Login()
@@ -26,7 +31,7 @@ namespace MonaspatyF.Controllers
             if (cookie.GetCookie() != null)
             {
                 int id = int.Parse(cookie.GetCookie());
-                HttpContext.Session.SetInt32("ownerId", id);
+                SetSession(id);
                 return RedirectToAction("Profile");
             }
             return View();
@@ -38,7 +43,7 @@ namespace MonaspatyF.Controllers
             if (ow != null)
             {
                 //------------------------------Session-------------------------------------------------------
-                HttpContext.Session.SetInt32("ownerId", ow.Id);
+                SetSession(ow.Id);
                 if (rememberme == "true")
                 {
                     //---------------------------Cookie-------------------------------------------------------
@@ -59,7 +64,7 @@ namespace MonaspatyF.Controllers
 
         public IActionResult logOut()
         {
-            HttpContext.Session.SetInt32("ownerId", -1);
+            SetSession(-1);
             cookie.deleteCookie();
             return RedirectToAction("Login");
         }
@@ -70,7 +75,7 @@ namespace MonaspatyF.Controllers
             if (ModelState.IsValid)
             {
                 HSO.Add(ow);
-                HttpContext.Session.SetInt32("ownerId", ow.Id);
+                SetSession(ow.Id);
                 return RedirectToAction("Profile");
             }
             else
@@ -102,20 +107,25 @@ namespace MonaspatyF.Controllers
         [HttpPost]
         public IActionResult AddHS(HallShop hs)
         {
-            int count = 0;
-            List<HallShop> hsTOImage = HSO.getHallAndShop();
-            foreach (var item in hsTOImage)
-            {
-                count = count + 1;
-            }
-
             //if (ModelState.IsValid)
             //{
-                hs.Image = $"{count}.jpg";
-                hs.photo.CopyTo(System.IO.File.Create($"wwwroot/attach/{count}.jpg"));
-                HttpContext.Session.SetInt32("ownerId", hs.OwnerId);
-                HSO.saveHallOrShop(hs);
-                return RedirectToAction("Profile");
+
+            string wwwRootPath = webHostEnvironment.WebRootPath;
+            string fileName = Path.GetFileNameWithoutExtension(hs.photo.FileName);
+            string extension = Path.GetExtension(hs.photo.FileName);
+            hs.Image = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+            string path = Path.Combine(wwwRootPath + "/attach/", fileName);
+            using (var fileStream = new FileStream(path, FileMode.Create))
+            {
+                //await hs.photo.CopyToAsynch(fileStream);
+                hs.photo.CopyTo(fileStream);
+            }
+            //hs.Image = hs.photo.FileName;
+            //hs.photo.CopyTo(System.IO.File.Create($"wwwroot/attach/{hs.photo.FileName}"));
+            
+            HSO.saveHallOrShop(hs);
+            SetSession(hs.OwnerId);
+            return RedirectToAction("Profile");
             //}
             //else
             //{
@@ -133,7 +143,7 @@ namespace MonaspatyF.Controllers
         public IActionResult EditHOS(HallShop hs)
         {
             //hs.Image = hs.photo.FileName;
-            HttpContext.Session.SetInt32("ownerId", hs.OwnerId);
+            SetSession(hs.OwnerId);
             HSO.EditHallOrShop(hs);
             return RedirectToAction("Profile");
         }
@@ -147,6 +157,12 @@ namespace MonaspatyF.Controllers
             }
             HSO.deleteHallOrShop(id);
             return RedirectToAction("Profile");
+        }
+
+        public void SetSession(int id)
+        {
+            HttpContext.Session.SetInt32("ownerId", id);
+
         }
     }
 }
